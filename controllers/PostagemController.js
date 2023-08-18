@@ -14,6 +14,33 @@ function PostagemController(app) {
             db.close()
         })()
     }
+    //cadastrando o usuario
+    app.post('/usuario', inserir)
+    function inserir(req, res) {
+        (async () => {
+            const db = await open({
+                filename: './infra/dados.db',
+                driver: sqlite3.Database
+            })
+            const crypto = require("crypto");
+            const DADOS_CRIPTOGRAFAR = {
+                algoritmo: "aes256",
+                segredo: "chaves"
+            };
+            const crypto = require("crypto")
+            const crypto = require("crypto")
+            const cipher = crypto.createCipher(DADOS_CRIPTOGRAFAR.algoritmo, DADOS_CRIPTOGRAFAR.segredo)
+            // código anterior omitido
+            cipher.update(senha);
+            // código anterior omitido
+            cipher.final(DADOS_CRIPTOGRAFAR.tipo);
+
+            await db.run(`INSERT INTO usuario(nome, email, senha) VALUES(?,?,?)`, req.body.nome, req.body.email, req.body.senha)
+
+            res.send(`Tarefa: ${req.body.id} inserida com sucesso.`)
+            db.close()
+        })()
+    }
     // app.get('/tecnologia/id/:id', buscarTitulo)
     // function buscarTitulo(req, res) {
     //     (async () => {
@@ -30,18 +57,7 @@ function PostagemController(app) {
     //         db.close()
     //     })()
     // }
-    // app.post('/tecnologia', inserir)
-    // function inserir(req, res) {
-    //     (async () => {
-    //         const db = await open({
-    //             filename: './src/infra/bdTarefas.db',
-    //             driver: sqlite3.Database
-    //         })
-    //         await db.run(`INSERT INTO Tecnologia(titulo,descricao,status,data_criacao,id_usuario,img) VALUES(?,?,?,?,?,?)`, req.body.titulo, req.body.descricao, req.body.status,req.body.data_criacao,req.body.id_usuario, req.body.img)
-    //         res.send(`Tarefa: ${req.body.titulo} inserida com sucesso.`)
-    //         db.close()
-    //     })()
-    // }
+
     // app.delete('/tecnologia/id/:id', deletarTitulo)
     // function deletarTitulo(req, res) {
     //     (async () => {
